@@ -1,6 +1,7 @@
 import tkinter as tk
 import os
 print (os.path.dirname(os.path.realpath(__file__)) )
+import random
     
 class DrawingTrade(tk.Tk):
     def __init__(self):
@@ -53,21 +54,67 @@ class StartPage(tk.Frame):
 
         # bottom frame 생성
 
-        frame_bottom = tk.Frame(self, relief="ridge", borderwidth = 1)
+        frame_bottom = tk.Frame(self, relief="ridge", borderwidth = 1, width = 100, height = 50)
         frame_bottom.pack(side="bottom", fill="both", expand=True)
 
 
 
         tk.Button(frame_bottom, text="Next",
-                  command=lambda: master.switch_frame(ResultPage)).pack()
+                  command=lambda: master.switch_frame(LoadingPage)).pack()
+                 
+class LoadingPage(tk.Frame):
+    def __init__(self, master):
+        text = tk.Label(self, text="Loading...", font=18)
+        text.pack()
+
+        img = tk.PhotoImage(file="./images/" + str(random(10))+ ".png")
+        lbl = tk.Label(self, image=img)
+        lbl.image = img
+        lbl.grid(row = 3, column = 1, padx = 5, pady = 5)
+
+        self.after(20000, ResultPage)
+
+        
+
+
 
 class ResultPage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-        tk.Frame.configure(self,bg='blue')
-        tk.Label(self, text="Recommendation", font=('Helvetica', 18, "bold")).pack(side="left", fill="x", pady=5)
-        tk.Button(self, text="Go back to start page",
-                  command=lambda: master.switch_frame(StartPage)).pack()
+
+        label1 = tk.Label(self, text="Recommendation")
+        
+        # 가장 유사도가 높은 알트코인 그래프부터 n개의 코인을 추천
+
+         # top frame 생성
+
+        frame_top = tk.Frame(self, relief="solid", borderwidth = 1)
+        frame_top.pack(side = "top", fill = "both", expand=True)
+
+        # top frame의 left frame 생성
+
+        frame_left = tk.Frame(frame_top, relief="solid", borderwidth = 1)
+        frame_left.pack(side="left", fill="both", expand=True)
+
+        # top frame의 right frame 생성
+
+        frame_left = tk.Frame(frame_top, relief="solid", borderwidth = 1)
+        frame_left.pack(side="right", fill="both", expand=True)
+        
+        # left frame에 사용자 그림, right frame에 그림과 가장 유사한 그래프를 출력
+
+        leftImage = tk.PhotoImage(file="photo.png")
+        lbl = tk.Label(frame_left, image=leftImage)
+        lbl.image = leftImage
+        lbl.grid(row = 3, column = 1, padx = 5, pady = 5)
+
+        rightImage = 
+
+       
+
+
+
+
 
 
 if __name__ == "__main__":
