@@ -58,7 +58,7 @@ class StartPage(tk.Frame):
         frame_bottom = tk.Frame(self, relief="ridge", borderwidth = 1, width = 100, height = 50)
         frame_bottom.pack(side="bottom", fill="both", expand=True)
 
-        # next screen으로 넘어감
+        # next page로 넘어감
 
         tk.Button(frame_bottom, text="Next",
                   command=lambda: master.switch_frame(LoadingPage)).pack()
@@ -124,12 +124,12 @@ class ResultPage(tk.Frame):
         lbl.image = leftImage
         lbl.grid(row = 3, column = 1, padx = 5, pady = 5)
 
-        rightImage = tk.PhotoImage(file=MatchingTest.data_path+list[0][0]+MatchingTest.extension)
-        lbl2 = tk.Label(frame_right, image=rightImage)
+        rightImage = tk.PhotoImage(file=MatchingTest.data_path+list[0][0]+MatchingTest.extension) # 이거 가장 유사도가 높은 코인 그래프 맞나
+        lbl2 = tk.Label(frame_right, image=rightImage) # 편한대로 하셈 이부분은 내일 손보지 뭐
         lbl2.image = rightImage
         lbl.grid(row = 3, column = 1, padx = 5, pady = 5)
 
-        # startPage로 넘어감
+        # startPage로 돌아감
 
         tk.Button(frame_bottom, text="Return",
                   command=lambda: master.switch_frame(StartPage)).pack()
