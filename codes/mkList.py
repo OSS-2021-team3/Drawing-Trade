@@ -1,23 +1,24 @@
-from crawler import carwl
+import crawler
 import numpy as np
 import cv2
 
 # import algorithms
-from AverageHashMatching import AverageHashMatching
-
+from ImageMatching import ImageMatching
 
 # make [ [name,diff] , [name,diff]  ... ]
 def mkList(user_img,case=1,data_path = "./datas/"):
     #  update price datas
-    tickers = carwl(data_path)
+    tickers = crawler.carwl(data_path)
+    # tickers = crawler.gettickers()
 
     # maybe add loading page
-    
     # choose one algorithm
     if case == 1:
-        compare = AverageHashMatching
-    # elif case == 2:
-    #     compare = comp2
+        compare = ImageMatching.EuclideanDistanceMatching
+        print("Euclide matching start")
+    elif case == 2:
+        print("Cosine matching start")
+        compare = ImageMatching.CosineSimilarityMatching
 
     values = []
     # valid data space
@@ -30,7 +31,7 @@ def mkList(user_img,case=1,data_path = "./datas/"):
 
         # make 2nd dimension array
         temp = [i]
-        temp.append(compare(graph, user_img))
+        temp.append(compare(user_img,graph))
         values.append(temp)
     
     # sort least diffrence
