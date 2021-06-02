@@ -1,5 +1,6 @@
 import tkinter as tk
-
+import os
+print (os.path.dirname(os.path.realpath(__file__)) )
     
 class DrawingTrade(tk.Tk):
     def __init__(self):
@@ -18,40 +19,44 @@ class StartPage(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
 
-        # top frame »ı¼º
+        # top frame ìƒì„±
 
         frame_top = tk.Frame(self, relief="solid", borderwidth = 1)
         frame_top.pack(side = "top", fill = "both", expand=True)
 
-        # top frameÀÇ left frame »ı¼º
+        # top frameì˜ left frame ìƒì„±
 
         frame_left = tk.Frame(frame_top, relief="solid", borderwidth = 1)
         frame_left.pack(side="left", fill="both", expand=True)
 
-        # left frame¿¡ ¹öÆ° ¹èÄ¡
+        # left frameì— ë²„íŠ¼ ë°°ì¹˜
 
         checkVar = tk.IntVar()
-        checkButton1 = tk.Radiobutton(frame_left, text = "À¯Å¬¸®µå °Å¸® À¯»çµµ ¸ÅÄª", variable = checkVar, value = 0)
-        checkButton2 = tk.Radiobutton(frame_left, text = "ÄÚ»çÀÎ À¯»çµµ ¸ÅÄª", variable = checkVar, value = 1)
+        checkButton1 = tk.Radiobutton(frame_left, text = "ìœ í´ë¦¬ë“œ ê±°ë¦¬ ìœ ì‚¬ë„ ë§¤ì¹­", variable = checkVar, value = 0)
+        checkButton2 = tk.Radiobutton(frame_left, text = "ì½”ì‚¬ì¸ ìœ ì‚¬ë„ ë§¤ì¹­", variable = checkVar, value = 1)
 
         checkButton1.grid(column=0, row=0, sticky="W")
         checkButton2.grid(column=0, row=1, sticky="W")
 
-        # top frameÀÇ right frame »ı¼º
+        # top frameì˜ right frame ìƒì„±
 
-        frame_right = tk.Frame(frame_top, relief="ridge", borderwidth = 1)
+        frame_right = tk.Frame(frame_top, relief="solid", borderwidth = 1)
         frame_right.pack(side="right", fill="both", expand=True)
 
-        img = tk.PhotoImage(file="photo.png")
-        lbl = tk.Label(frame_right, image=img)
-        lbl.pack()
+        # right frameì— ì´ë¯¸ì§€ ë°°ì¹˜
 
-        # bottom frame »ı¼º
+        image1 = tk.PhotoImage(file="photo.png")
+        lbl = tk.Label(frame_right, image=image1)
+        lbl.image = image1
+        lbl.grid(row = 3, column = 1, padx = 5, pady = 5)
+      
+
+        # bottom frame ìƒì„±
 
         frame_bottom = tk.Frame(self, relief="ridge", borderwidth = 1)
         frame_bottom.pack(side="bottom", fill="both", expand=True)
 
-        
+
 
         tk.Button(frame_bottom, text="Next",
                   command=lambda: master.switch_frame(ResultPage)).pack()
@@ -67,7 +72,7 @@ class ResultPage(tk.Frame):
 
 if __name__ == "__main__":
     app = DrawingTrade()\
-    # Title ¼³Á¤
+    # Title ì„¤ì •
     app.title("Drawing Trade")
-    # È­¸é Å©±â ¼³Á¤
+    # í™”ë©´ í¬ê¸° ì„¤ì •
     app.mainloop()
