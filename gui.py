@@ -82,7 +82,7 @@ class ResultPage(QDialog):
         super(ResultPage, self).__init__()
         loadUi("result.ui", self)
         self.userImage.setPixmap(QtGui.QPixmap(filename))
-        
+        self.label.setText(results[0][0])
         self.resultImage.setPixmap(QtGui.QPixmap('./datas/' + results[0][0] +'.png'))
         self.returnButton.clicked.connect(self.gotoMainPage)
 
