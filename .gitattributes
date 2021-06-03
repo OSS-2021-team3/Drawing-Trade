@@ -1,0 +1,4 @@
+C:/Users/bsw96/Drawing-Trade/dist/gui.exe filter=lfs diff=lfs merge=lfs -text
+C:/Users/bsw96/Drawing-Trade/.gitattributes filter=lfs diff=lfs merge=lfs -text
+*.exe filter=lfs diff=lfs merge=lfs -text
+C:/Users/bsw96/Drawing-Trade/.gitattributes filter=lfs diff=lfs merge=lfs -text
