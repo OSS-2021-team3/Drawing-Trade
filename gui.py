@@ -14,13 +14,18 @@ class MainPage(QDialog):
         self.nextButton.setEnabled(False)
         self.search.clicked.connect(self.fileopen)
         self.nextButton.clicked.connect(self.gotoLoadingPage)
+
+        global radio1
+        global radio2
+        radio1 = self.radioButton
+        radio2 = self.radioButton2
         
 
     def fileopen(self):
         global filename
         filename, _ = QFileDialog.getOpenFileName(self, 'Open File')
         self.img.setPixmap(QtGui.QPixmap(filename))
-        if (filename):
+        if ((filename and self.radioButton.isChecked()) or (filename and self.radioButton2.isChecked())):
             self.nextButton.setEnabled(True)
             print(self.nextButton)
 
@@ -33,56 +38,36 @@ class MainPage(QDialog):
     
             
 class LoadingPage(QDialog):
-
     def __init__(self):
         super(LoadingPage, self).__init__()
         loadUi("loading.ui", self)
-
-        self.img.setPixmap(QtGui.QPixmap(""+".png"))
+        self.next.setEnabled(False)
+        self.img.setPixmap(QtGui.QPixmap("fun.jpg"))
+        self.next.clicked.connect(self.gotoResultPage)
+        #self.img.setPixmap(QtGui.QPixmap(""+".png"))
         global count
+        global check
         count = 0
-        self.start_process()
-
-
-
-    def addValue(self):
-        self.count += 1
-        return self.count   
-
-    # progress 화면에 표시
-    def timer_prog(self):
-
-        self.addValue(self)
-
-        # ProgressBar의 값이 최대값 이상 Timer를 중지
-        if count >= 10000():
-            self.timeVar.stop()        
-
-    
-
+        check = 0
+        if (check == 0):
+            self.start_process()
+            self.next.setEnabled(True)
+            
 
     # 타이머 시작
     def start_process(self):
         # Timer 세팅
-        self.timeVar = QTimer()
-        self.timeVar.setInterval(100)
-        self.timeVar.timeout.connect(self.timer_prog)
-        self.timeVar.start()
+        
 
         # results = [ ['KOR-DOGE',20231 ],['KOR-BTC',23434] ... ] 으로 2차원 배열 오름차순으로 되어있음
 
         # 유클리드 거리 유사도 매칭
-        file_url = QUrl.fromLocalFile(filename)
         global results
-        if MainPage.radioButton.isChecked():
-            results = mkList(file_url,1)
-
-        # 코사인 거리 유사도 매칭    
-        elif MainPage.radioButton2.isChecked():
-            results = mkList(file_url,2)
-        
-        self.gotoResultPage()
-        
+        if(radio1.isChecked()):
+            results = mkList(filename, 1)
+        # 코사인 유사도 매칭
+        elif(radio2.isChecked()):
+            results = mkList(filename, 2)
 
 
     def gotoResultPage(self):
@@ -97,7 +82,8 @@ class ResultPage(QDialog):
         super(ResultPage, self).__init__()
         loadUi("result.ui", self)
         self.userImage.setPixmap(QtGui.QPixmap(filename))
-        self.resultImage.setPixmap(QtGui.QPixmap('./data/' + results[0][0] +'.png'))
+        
+        self.resultImage.setPixmap(QtGui.QPixmap('./datas/' + results[0][0] +'.png'))
         self.returnButton.clicked.connect(self.gotoMainPage)
 
         # 결과 data url : './data/' + results[0][0] +'.png' 
@@ -114,7 +100,7 @@ app = QApplication(sys.argv)
 widget=QtWidgets.QStackedWidget()
 myWindow = MainPage()
 widget.addWidget(myWindow)
-widget.setFixedWidth(839)
-widget.setFixedHeight(727)
+widget.setFixedWidth(1028)
+widget.setFixedHeight(710)
 widget.show()
 app.exec_()
