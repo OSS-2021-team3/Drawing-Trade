@@ -3,7 +3,6 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import QTimer, QUrl
 from mkList import mkList
 
 
@@ -12,22 +11,42 @@ class MainPage(QDialog):
         super(MainPage,self).__init__()
         loadUi("main.ui", self)
         self.nextButton.setEnabled(False)
-        self.search.clicked.connect(self.fileopen)
-        self.nextButton.clicked.connect(self.gotoLoadingPage)
 
+        #Loading페이지에서 선택한 알고리즘에 따라 종목 추천을 하기 위해 사용
         global radio1
         global radio2
         radio1 = self.radioButton
         radio2 = self.radioButton2
+
+        #버튼 활성화 비활성화를 위한 변수 및 함수
+        check = 0
+        self.initCheck()
         
+        self.search.clicked.connect(self.fileopen)       
+        self.radioButton.clicked.connect(self.checkButton)
+        self.radioButton2.clicked.connect(self.checkButton)
+                
+        self.nextButton.clicked.connect(self.gotoLoadingPage)
+
+    def initCheck(self):
+        self.check = 0
+    def checkButton(self):
+        #찾아보기를 먼저하고 radiobutton을 누르는 경우
+        if (self.check == 1):
+            self.nextButton.setEnabled(True)
 
     def fileopen(self):
         global filename
+        
         filename, _ = QFileDialog.getOpenFileName(self, 'Open File')
         self.img.setPixmap(QtGui.QPixmap(filename))
-        if ((filename and self.radioButton.isChecked()) or (filename and self.radioButton2.isChecked())):
-            self.nextButton.setEnabled(True)
-            print(self.nextButton)
+        #radiobutton을 누르고 찾아보기를 누르는 경우
+        if (filename):
+            self.check = 1
+            print(self.check)  
+            if (self.radioButton.isChecked() or self.radioButton2.isChecked()):
+                self.nextButton.setEnabled(True)
+
 
     def gotoLoadingPage(self):
         loading=LoadingPage()
@@ -41,23 +60,19 @@ class LoadingPage(QDialog):
     def __init__(self):
         super(LoadingPage, self).__init__()
         loadUi("loading.ui", self)
+        #next button 비활성화
         self.next.setEnabled(False)
-        self.img.setPixmap(QtGui.QPixmap("fun.jpg"))
-        self.next.clicked.connect(self.gotoResultPage)
-        #self.img.setPixmap(QtGui.QPixmap(""+".png"))
-        global count
-        global check
-        count = 0
-        check = 0
-        if (check == 0):
-            self.start_process()
-            self.next.setEnabled(True)
-            
-
-    # 타이머 시작
-    def start_process(self):
-        # Timer 세팅
         
+        #self.img.setPixmap(QtGui.QPixmap(""+".png")) 
+        self.img.setPixmap(QtGui.QPixmap("fun.jpg"))
+
+        #start button 클릭 후 작업 진행
+        self.start.clicked.connect(self.start_process)
+
+        #next button 클릭 후 결과 페이지로 이동
+        self.next.clicked.connect(self.gotoResultPage)
+        
+    def start_process(self):
 
         # results = [ ['KOR-DOGE',20231 ],['KOR-BTC',23434] ... ] 으로 2차원 배열 오름차순으로 되어있음
 
@@ -69,6 +84,9 @@ class LoadingPage(QDialog):
         elif(radio2.isChecked()):
             results = mkList(filename, 2)
 
+        #start 버튼 비활성화, next 버튼 활성화
+        self.start.setEnabled(False)
+        self.next.setEnabled(True)
 
     def gotoResultPage(self):
         result=ResultPage()
@@ -81,9 +99,17 @@ class ResultPage(QDialog):
     def __init__(self):
         super(ResultPage, self).__init__()
         loadUi("result.ui", self)
+
+        #유저 이미지 배치
         self.userImage.setPixmap(QtGui.QPixmap(filename))
+
+        #추천하는 코인의 이름 표시
         self.label.setText(results[0][0])
+
+        #추천하는 코인의 그래프 배치
         self.resultImage.setPixmap(QtGui.QPixmap('./datas/' + results[0][0] +'.png'))
+
+        #main 페이지로 돌아감
         self.returnButton.clicked.connect(self.gotoMainPage)
 
         # 결과 data url : './data/' + results[0][0] +'.png' 

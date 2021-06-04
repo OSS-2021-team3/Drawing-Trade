@@ -29,7 +29,7 @@
   <widget class="QPushButton" name="next">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>620</x>
      <y>650</y>
      <width>93</width>
      <height>28</height>
@@ -67,11 +67,11 @@
    <property name="font">
     <font>
      <family>Bell MT</family>
-     <pointsize>22</pointsize>
+     <pointsize>14</pointsize>
     </font>
    </property>
    <property name="text">
-    <string>결과가 나왔습니다!</string>
+    <string>Start 버튼을 클릭 후 결과가 나오면 Next 버튼이 활성화됩니다.</string>
    </property>
   </widget>
   <widget class="Line" name="line_2">
@@ -88,6 +88,19 @@
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="start">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>650</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Start</string>
    </property>
   </widget>
  </widget>
