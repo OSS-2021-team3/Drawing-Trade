@@ -21,11 +21,17 @@ class MainPage(QDialog):
         #버튼 활성화 비활성화를 위한 변수 및 함수
         check = 0
         self.initCheck()
-
-        self.search.clicked.connect(self.fileopen)       
+        
+        #찾아보기 버튼을 클릭하면, 파일 오픈 함수를 호출
+        self.search.clicked.connect(self.fileopen)    
+        
+        #유클리드 거리 유사도 매칭 알고리즘 선택
         self.radioButton.clicked.connect(self.checkButton)
+        
+        #코사인 유사도 매칭 알고리즘 선택
         self.radioButton2.clicked.connect(self.checkButton)
-                
+        
+        #next버튼 클릭 후 다음 페이지로 
         self.nextButton.clicked.connect(self.gotoLoadingPage)
 
     def initCheck(self):
