@@ -90,7 +90,9 @@ class ResultPage(QDialog):
         # 2등결과 results[1][0]
 
     def gotoMainPage(self):
-        widget.setCurrentIndex(widget.currentIndex()-2)
+        main=MainPage()
+        widget.addWidget(main)
+        widget.setCurrentIndex(widget.currentIndex()+1)
 
 
 
