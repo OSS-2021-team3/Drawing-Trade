@@ -21,7 +21,7 @@ class MainPage(QDialog):
         #버튼 활성화 비활성화를 위한 변수 및 함수
         check = 0
         self.initCheck()
-        
+
         self.search.clicked.connect(self.fileopen)       
         self.radioButton.clicked.connect(self.checkButton)
         self.radioButton2.clicked.connect(self.checkButton)
@@ -38,7 +38,7 @@ class MainPage(QDialog):
     def fileopen(self):
         global filename
         
-        filename, _ = QFileDialog.getOpenFileName(self, 'Open File')
+        filename, _ = QFileDialog.getOpenFileName(self, 'Open File', './', '*.png')
         self.img.setPixmap(QtGui.QPixmap(filename))
         #radiobutton을 누르고 찾아보기를 누르는 경우
         if (filename):
