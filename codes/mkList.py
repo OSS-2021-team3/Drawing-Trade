@@ -8,8 +8,7 @@ from ImageMatching import ImageMatching
 # make [ [name,diff] , [name,diff]  ... ]
 def mkList(user_img_url,case=1,data_path = "./datas/"):
     #  update price datas
-    tickers = crawler.carwl(data_path)
-    # tickers = crawler.gettickers()
+    tickers = crawler.gettickers()
 
     # maybe add loading page
     # choose one algorithm
@@ -38,3 +37,6 @@ def mkList(user_img_url,case=1,data_path = "./datas/"):
     values.sort(key = lambda x:x[1])
 
     return values
+
+def refreshDatas():
+    return crawler.carwl(data_path = "./datas/")
