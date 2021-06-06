@@ -6,7 +6,7 @@ import cv2
 from ImageMatching import ImageMatching
 
 # make [ [name,diff] , [name,diff]  ... ]
-def mkList(user_img,case=1,data_path = "./datas/"):
+def mkList(user_img_url,case=1,data_path = "./datas/"):
     #  update price datas
     tickers = crawler.carwl(data_path)
     # tickers = crawler.gettickers()
@@ -28,10 +28,10 @@ def mkList(user_img,case=1,data_path = "./datas/"):
     for i in tickers:
         # from .png file to opencv for input file
         graph = cv2.imread(data_path+i+".png")[y:y+h,x:x+w].copy()
-
+        user_data = cv2.imread(user_img_url)
         # make 2nd dimension array
         temp = [i]
-        temp.append(compare(user_img,graph))
+        temp.append(compare(user_data,graph))
         values.append(temp)
     
     # sort least diffrence
